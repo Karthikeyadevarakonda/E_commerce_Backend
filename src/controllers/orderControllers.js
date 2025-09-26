@@ -55,7 +55,6 @@ export const deleteOrder = async (req, res) => {
       where: { orderId: id },
     });
 
-    // now delete the order itself
     await prisma.order.delete({
       where: { id },
     });

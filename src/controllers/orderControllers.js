@@ -22,7 +22,8 @@ export const placeOrder = async (req, res) => {
         if (!product) throw new Error("Product not found");
 
         const Finalprice =
-          Number(product.actualPrice) - (Number(product.discount) || 0);
+          Number(product.actualPrice) *
+          (1 - (Number(product.discount) || 0) / 100);
 
         total += Finalprice * quantity;
 

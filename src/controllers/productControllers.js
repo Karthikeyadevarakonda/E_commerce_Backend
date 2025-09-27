@@ -41,6 +41,8 @@ const addProduct = async (req, res) => {
     discount,
     sizes,
     labels,
+    brand,
+    colour,
   } = req.body;
 
   try {
@@ -56,6 +58,8 @@ const addProduct = async (req, res) => {
         discount,
         sizes,
         labels,
+        brand,
+        colour,
       },
     });
 
@@ -93,6 +97,8 @@ const updateProductById = async (req, res) => {
     discount,
     sizes,
     labels,
+    brand, // added
+    colour, // added
   } = req.body;
 
   try {
@@ -109,6 +115,8 @@ const updateProductById = async (req, res) => {
         discount,
         sizes,
         labels,
+        brand,
+        colour,
       },
     });
 

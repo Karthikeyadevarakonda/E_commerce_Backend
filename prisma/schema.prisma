@@ -36,9 +36,11 @@ model Product {
   rating      Float?
   viewCount   Int
   actualPrice Decimal      @db.Decimal(10,2)
-  discount    Decimal?
+  discount    Decimal?     @db.Decimal(5,2) 
   sizes       Size[]
   labels      String[]
+  brand       String?      
+  colour      String?      
   orderItems  OrderItem[] 
 }
 

@@ -6,8 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  // Remove output or set a folder inside src:
-  // output   = "./src/generated/prisma"
 }
 
 

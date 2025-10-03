@@ -3,13 +3,26 @@ import prisma from "../lib/prisma.js";
 
 dotenv.config();
 
+// const getAllProducts = async (req, res) => {
+//   try {
+//     const products = await prisma.product.findMany();
+//     res.status(200).json({ data: products });
+//   } catch (error) {
+//     console.error("Error in getting products:", error);
+//     res.status(500).json({ message: "Error in getting products" });
+//   }
+// };
+
 const getAllProducts = async (req, res) => {
   try {
     const products = await prisma.product.findMany();
+    console.log("Products fetched:", products);
     res.status(200).json({ data: products });
   } catch (error) {
     console.error("Error in getting products:", error);
-    res.status(500).json({ message: "Error in getting products" });
+    res
+      .status(500)
+      .json({ message: "Error in getting products", error: error.message });
   }
 };
 

@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma";
+import prisma from "../lib/prisma.js";
 
 export const placeOrder = async (req, res) => {
   const { userId, items } = req.body;

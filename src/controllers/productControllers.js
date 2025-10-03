@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
-import prisma from "../lib/prisma";
+import prisma from "../lib/prisma.js";
+
 dotenv.config();
 
 const getAllProducts = async (req, res) => {

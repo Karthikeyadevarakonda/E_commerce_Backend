@@ -1,49 +1,61 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
-
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id String @id @default(cuid())
-  email String @unique
+model User {
+  id       String  @id @default(cuid())
+  email    String  @unique
   password String
-  role Role @default(USER)
-  order Order[]
-}
-
-enum Role{
-   ADMIN
-   USER
+  role     Role    @default(USER)
+  order    Order[]
 }
 
 model Product {
-  id          String       @id @default(cuid())
+  id          String      @id @default(cuid())
   productName String
   productType ProductType
   image       String?
   gender      Gender[]
   rating      Float?
   viewCount   Int
-  actualPrice Decimal      @db.Decimal(10,2)
-  discount    Decimal?     @db.Decimal(5,2) 
   sizes       Size[]
   labels      String[]
-  brand       String?      
-  colour      String?      
-  orderItems  OrderItem[] 
+  actualPrice Decimal     @db.Decimal(10, 2)
+  discount    Decimal?    @db.Decimal(5, 2)
+  brand       String?
+  colour      String?
+  orderItems  OrderItem[]
 }
 
+model Order {
+  id        String      @id @default(cuid())
+  userId    String
+  total     Decimal     @db.Decimal(10, 2)
+  status    OrderStatus @default(PENDING)
+  createdAt DateTime    @default(now())
+  user      User        @relation(fields: [userId], references: [id])
+  products  OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Decimal @db.Decimal(10, 2)
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  USER
+}
 
 enum ProductType {
   SHIRT
@@ -63,7 +75,6 @@ enum ProductType {
   FOOTWEAR
 }
 
-
 enum Gender {
   MEN
   WOMEN
@@ -78,26 +89,6 @@ enum Size {
   L
   XL
   XXL
-}
-
-model Order {
-  id        String      @id @default(cuid())
-  user      User        @relation(fields: [userId], references: [id])
-  userId    String
-  products  OrderItem[] 
-  total     Decimal     @db.Decimal(10,2)
-  status    OrderStatus @default(PENDING)
-  createdAt DateTime    @default(now())
-}
-
-model OrderItem {
-  id        String   @id @default(cuid())
-  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  orderId   String
-  product   Product  @relation(fields: [productId], references: [id])
-  productId String
-  quantity  Int
-  price     Decimal  @db.Decimal(10,2) 
 }
 
 enum OrderStatus {

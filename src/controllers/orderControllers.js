@@ -1,8 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
-
-//place an order
+import prisma from "../lib/prisma";
 
 export const placeOrder = async (req, res) => {
   const { userId, items } = req.body;

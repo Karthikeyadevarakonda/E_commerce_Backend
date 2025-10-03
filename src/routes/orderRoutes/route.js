@@ -8,16 +8,17 @@ import {
   placeOrder,
   updateOrderStatus,
 } from "../../controllers/orderControllers.js";
+import { checkRole, isAuthenticated } from "../../middlewares/authCheck.js";
 
 const router = express.Router();
 
-router.post("/", placeOrder);
-router.get("/user/:id", getAllOrdersOfSpecificUser);
-router.get("/:id", getOrderById);
+router.post("/", isAuthenticated, placeOrder);
+router.get("/user/:id", isAuthenticated, getAllOrdersOfSpecificUser);
+router.get("/:id", isAuthenticated, getOrderById);
 
 //admins
-router.get("/", AllOrders);
-router.delete("/delete/:id", deleteOrder);
-router.put("/:id/status", updateOrderStatus);
+router.get("/", isAuthenticated, AllOrders);
+router.delete("/delete/:id", isAuthenticated, deleteOrder);
+router.put("/:id/status", isAuthenticated, checkRole, updateOrderStatus);
 
 export default router;

@@ -1,6 +1,6 @@
 import { createServer } from "http";
 import { parse } from "url";
-import { prisma } from "../src/lib/prisma.js";
+import prisma from "../src/lib/prisma.js";
 
 // api/index.js
 import express from "express";

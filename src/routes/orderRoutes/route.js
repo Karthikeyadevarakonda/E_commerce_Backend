@@ -19,6 +19,11 @@ router.get("/:id", isAuthenticated, getOrderById);
 //admins
 router.get("/", isAuthenticated, AllOrders);
 router.delete("/delete/:id", isAuthenticated, deleteOrder);
-router.put("/:id/status", isAuthenticated, checkRole, updateOrderStatus);
+router.put(
+  "/:id/status",
+  isAuthenticated,
+  checkRole("ADMIN"),
+  updateOrderStatus
+);
 
 export default router;

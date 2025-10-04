@@ -1,30 +1,32 @@
 import dotenv from "dotenv";
-import prisma from "../lib/prisma.js";
+// import prisma from "../lib/prisma.js";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 dotenv.config();
-
-// const getAllProducts = async (req, res) => {
-//   try {
-//     const products = await prisma.product.findMany();
-//     res.status(200).json({ data: products });
-//   } catch (error) {
-//     console.error("Error in getting products:", error);
-//     res.status(500).json({ message: "Error in getting products" });
-//   }
-// };
 
 const getAllProducts = async (req, res) => {
   try {
     const products = await prisma.product.findMany();
-    console.log("Products fetched:", products);
     res.status(200).json({ data: products });
   } catch (error) {
     console.error("Error in getting products:", error);
-    res
-      .status(500)
-      .json({ message: "Error in getting products", error: error.message });
+    res.status(500).json({ message: "Error in getting products" });
   }
 };
+
+// const getAllProducts = async (req, res) => {
+//   try {
+//     const products = await prisma.product.findMany();
+//     console.log("Products fetched:", products);
+//     res.status(200).json({ data: products });
+//   } catch (error) {
+//     console.error("Error in getting products:", error);
+//     res
+//       .status(500)
+//       .json({ message: "Error in getting products", error: error.message });
+//   }
+// };
 
 const getProductById = async (req, res) => {
   const { id } = req.params;
@@ -96,6 +98,7 @@ const deleteProductById = async (req, res) => {
 
 // Update product by ID
 const updateProductById = async (req, res) => {
+  console.log("🧾 Product update payload:", req.body);
   const { id } = req.params;
   const {
     productName,

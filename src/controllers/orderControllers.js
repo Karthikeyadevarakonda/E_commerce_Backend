@@ -122,9 +122,15 @@ export const AllOrders = async (req, res) => {
   }
 };
 
+// controllers/orderController.js
 export const updateOrderStatus = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
+
+  const validStatuses = ["PENDING", "PAID", "SHIPPED", "DELIVERED", "CANCELED"];
+  if (!validStatuses.includes(status)) {
+    return res.status(400).json({ message: "Invalid order status" });
+  }
 
   try {
     const updatedOrder = await prisma.order.update({
@@ -133,9 +139,9 @@ export const updateOrderStatus = async (req, res) => {
     });
     res
       .status(200)
-      .json({ message: "Order updated Successfully", data: updatedOrder });
+      .json({ message: "Order updated successfully", data: updatedOrder });
   } catch (error) {
-    console.error("Error in updating order status  : ", error);
-    res.status(500).json({ message: "failed to update order Status" });
+    console.error("Error updating order status:", error);
+    res.status(500).json({ message: "Failed to update order status" });
   }
 };

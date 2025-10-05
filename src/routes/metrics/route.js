@@ -4,6 +4,6 @@ import { checkRole, isAuthenticated } from "../../middlewares/authCheck.js";
 
 const router = express.Router();
 // isAuthenticated, checkRole("ADMIN")
-router.get("/metrics", getMetrics);
+router.get("/metrics", isAuthenticated, checkRole("ADMIN"), getMetrics);
 
 export default router;

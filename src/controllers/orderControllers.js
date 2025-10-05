@@ -67,10 +67,9 @@ export const deleteOrder = async (req, res) => {
 
 //get all orders of specific users
 
-export const getAllOrdersOfSpecificUser = async (req, res) => {
-  const { id: userId } = req.params;
+export const getAllOrdersOfCurrentUser = async (req, res) => {
+  const userId = req.user.id; // from isAuthenticated middleware
   try {
-    // Check if user exists first or else we will get data no matter of user exist or not
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -83,8 +82,8 @@ export const getAllOrdersOfSpecificUser = async (req, res) => {
 
     res.status(200).json({ message: "All orders", data: allOrders });
   } catch (error) {
-    console.error("Error in getAllOrdersOfSpecificUser : ", error);
-    res.status(500).json({ message: "failed to getAllOrdersOfSpecificUser" });
+    console.error("Error in getAllOrdersOfCurrentUser:", error);
+    res.status(500).json({ message: "Failed to get user orders" });
   }
 };
 

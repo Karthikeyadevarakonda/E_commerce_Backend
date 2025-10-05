@@ -6,14 +6,14 @@ import {
   getProductById,
   updateProductById,
 } from "../../controllers/productControllers.js";
-import { isAuthenticated } from "../../middlewares/authCheck.js";
+import { checkRole, isAuthenticated } from "../../middlewares/authCheck.js";
 
 const router = express.Router();
 
 router.get("/", getAllProducts);
 router.get("/:id", getProductById);
-router.post("/", addProduct);
-router.put("/:id", isAuthenticated, updateProductById);
-router.delete("/:id", isAuthenticated, deleteProductById);
+router.post("/", isAuthenticated, checkRole("ADMIN"), addProduct);
+router.put("/:id", isAuthenticated, checkRole("ADMIN"), updateProductById);
+router.delete("/:id", isAuthenticated, checkRole("ADMIN"), deleteProductById);
 
 export default router;

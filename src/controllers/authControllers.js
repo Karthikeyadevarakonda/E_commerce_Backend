@@ -22,6 +22,7 @@ export const register = async (req, res) => {
     res.status(500).json({
       message: "Registration Failed",
       error: error.message,
+      stack: error.stack,
     });
   }
 };

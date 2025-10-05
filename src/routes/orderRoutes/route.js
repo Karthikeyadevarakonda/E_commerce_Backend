@@ -3,7 +3,7 @@ import express from "express";
 import {
   AllOrders,
   deleteOrder,
-  getAllOrdersOfSpecificUser,
+  getAllOrdersOfCurrentUser,
   getOrderById,
   placeOrder,
   updateOrderStatus,
@@ -13,7 +13,7 @@ import { checkRole, isAuthenticated } from "../../middlewares/authCheck.js";
 const router = express.Router();
 
 router.post("/", isAuthenticated, placeOrder);
-router.get("/user/:id", isAuthenticated, getAllOrdersOfSpecificUser);
+router.get("/user/:id", isAuthenticated, getAllOrdersOfCurrentUser);
 router.get("/:id", isAuthenticated, getOrderById);
 
 //admins

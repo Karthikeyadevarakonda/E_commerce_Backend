@@ -9,9 +9,21 @@ import metricRoutes from "./routes/metrics/route.js";
 dotenv.config();
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://trendcartecomin.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = `The CORS policy does not allow access from this origin.`;
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     credentials: true,
   })
 );

@@ -17,7 +17,7 @@ router.get("/user/:id", isAuthenticated, getAllOrdersOfSpecificUser);
 router.get("/:id", isAuthenticated, getOrderById);
 
 //admins
-router.get("/", isAuthenticated, AllOrders);
+router.get("/", AllOrders);
 router.delete("/delete/:id", isAuthenticated, deleteOrder);
 router.put(
   "/:id/status",

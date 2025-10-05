@@ -12,6 +12,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://trendcartecomin.vercel.app",
+  "https://harmonious-starburst-e9bb8f.netlify.app",
 ];
 
 app.use(

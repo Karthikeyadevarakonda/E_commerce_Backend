@@ -11,23 +11,31 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://trendcartecomin.vercel.app",
+  "https://trendcartecom.vercel.app",
   "https://harmonious-starburst-e9bb8f.netlify.app",
 ];
 
 app.use(
   cors({
-    origin: function (origin, callback) {
+    origin: (origin, callback) => {
       if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = `The CORS policy does not allow access from this origin.`;
-        return callback(new Error(msg), false);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
-      return callback(null, true);
+
+      return callback(
+        new Error("The CORS policy does not allow access from this origin"),
+        false
+      );
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
+
+// 👇 THIS IS CRITICAL
+app.options("*", cors());
 
 app.use(express.json());
 app.use("/auth", authRoutes);
